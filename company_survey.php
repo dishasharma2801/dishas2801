@@ -1,58 +1,140 @@
 <?php
 include("db.php");
-
+include('header.php');
 ?>
-<html>
-<head>
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/bootstrap.bundle.js"></script>
-</head>
-<body>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	<a href="#" class="navbar-brand">TSS</a>
-	<button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
-		<span class="navbar-toggler-icon"></span>
-	</button>
+<?php
+   
+    if (isset($_POST['register'])) {
+        $email = $_POST['email'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $password_hash = password_hash($password, PASSWORD_BCRYPT);
+        $query = $connection->prepare("SELECT * FROM  company_survey WHERE email=:email");
+        $query->bindParam("email", $email, PDO::PARAM_STR);
+        $query->execute();
+        if ($query->rowCount() > 0) {
+            echo '<p class="error">The email address is already registered!</p>';
+        }
+        if ($query->rowCount() == 0) {
+            $query = $connection->prepare("INSERT INTO users(email,password,email) VALUES (email:,:password_hash,:email)");
+            $query->bindParam("email", $email, PDO::PARAM_STR);
+            $query->bindParam("password_hash", $password_hash, PDO::PARAM_STR);
+            $query->bindParam("email", $email, PDO::PARAM_STR);
+            $result = $query->execute();
+            if ($result) {
+                echo '<p class="success">Your registration was successful!</p>';
+            } else {
+                echo '<p class="error">Something went wrong!</p>';
+            }
+        }
+    }
+?>
 
-	<div id="menu" class="collapse navbar-collapse">
-		<ul class="nav navbar-nav">
-			<li class="nav-item">
-				<a class="nav-link" href="index.php">Home</a>
-			</li>
+<script>
+	$(document).ready(function(){
 
-			<?php
-			if(isset($_SESSION['is_user_logged_in']))
-			{ ?>
-				<li class="nav-item">
-					<a class="nav-link" href="profile.php">Profile</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="logout.php">Logout</a>
-				</li>
-			<?php
-			}
-			else
-			{ ?>
-				<li class="nav-item">
-					<a class="nav-link" href="signup.php">Signup</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="login.php">Login</a>
-				</li>
-			<?php
-			}
-			?>
+$("#submit_btn").click(function(){
+
+  var a=$("#full_name").val();
+  var b=$("#email").val();
+  var c=$("#pass").val();
+  var d=$("#re_pass").val();
+  var e=$("#add").val();
+  
+
+  var check = true;
+
+  if (a=="")
+   {
+   	check = false;
+  	$("#full_name_msg").html("Insert Your Full Name");
+  	$("#full_name").addClass("form-error");
+  }
+  else
+  {
+  	$("#full_name_msg").html("");
+  	$("#full_name").removeClass("form-error");
+  }
+  if (b=="")
+   {
+   	check = false;
+  	$("#email_msg").html("Insert Your Email");
+  	$("#email").addClass("form-error");
+  }
+  else
+  {
+  	$("#email_msg").html("");
+	
+if(reg.test(b)==false)
+    {
+    	check = false;
+     $("email_msg").html("Email Id Is Not Correct");
+   }
+  else
+   {
+      $("email_msg").html("");
+      $("#email").removeClass("form-error");
+     }
+
+  }
+  if (c=="")
+   {
+   	check = false;
+  	$("#pass_msg").html("Insert Your Password");
+  	$("#pass").addClass("form-error");
+  }
+  else
+  {
+  	$("#pass_msg").html("");
+  	$("#pass").removeClass("form-error");
+  }
+  if (d=="")
+   {
+   	check = false;
+  	$("#re_pass_msg").html("Insert Your Re-Password");
+  	$("#re_pass").addClass("form-error");
+  }
+  else
+  {
+  	$("#re_pass_msg").html("");}
+  	
+
+if (c !=d) 
+ {
+ 	check = false;
+ $("#re_pass_msg").html(" Insert Correct Re-Password");
+ 
+}
+else
+{
+	$("#re_pass_msg").html("");
+	$("#re_pass").removeClass("form-error");
+}
 
 
 
+  }
+  if (e=="")
+   {
+   	check = false;
+  	$("#add_msg").html("Insert Your Address");
+  	$("#add").addClass("form-error");
+  }
+  else
+  {
+  	$("#add_msg").html("");
+  	$("#add").removeClass("form-error");
+  }
 
-			
-		</ul>
-	</div>
-</nav>
 
+
+  }
+
+ 
+});
+</script>
+
+  
 <div class="container mt-4" style="min-height: 600px;">
 	<h2 class="text-center">
 		User Registration
@@ -68,35 +150,48 @@ include("db.php");
 			<div class="card-body">
 				<div class="form-group">
 					<label>Full Name</label>
-					<input name="name" type="text" class="form-control">
+					<input name="name" type="text" name="name" id="name" placeholder="fullname" class="form-control">
+					
+					<small class="text-danger" id="name_msg"></small>
+
 				</div>
 
 				<div class="form-group">
-					<label>Username</label>
-					<input type="text" name="email" class="form-control">
+					<label>Email</label>
+					<input type="text" name="email" id="email" placeholder="email" class="form-control">
+
+					<small class="text-danger" id="email_msg"></small>
+
 				</div>
 				<div class="form-group">
 					<label>Password</label>
-					<input type="password" name="password" class="form-control">
+					<input type="password" name="pass" id="pass" class="form-control">
+
+					<small class="text-danger" id="pass_msg"></small>
+
 				</div>
 				<div class="form-group">
 					<label>Re-Password</label>
-					<input type="password" class="form-control">
+					<input type="password" name="re-pass" id="re-pass" class="form-control">
+
+					<small class="text-danger" id="re_pass_msg"></small>
+
 				</div>
 				<div class="form-group">
 					<label>Address</label>
-					<textarea class="form-control" name="address"></textarea>
+					<textarea class="form-control" id="add" name="add" placeholder="address"></textarea>
+
+					<small class="text-danger" id="add_msg"></small>
+
 				</div>
 			</div>
 			<div class="card-footer">
-				<input type="submit" value="Login" class="btn btn-success">
+				<input type="submit" value="submit" class="btn btn-success">
 			</div>
 		</div>
 	</form>
 	</div>
 </div>
-
-
 
 </body>
 </html>
