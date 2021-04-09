@@ -3,10 +3,10 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="/Disha/css/bootstrap.css">
-	<script type="text/javascript" src="/Disha/js/jquery.js"></script>
-	<script type="text/javascript" src="/Disha/js/bootstrap.bundle.js"></script>
+	<script type="text/javascript" src="/Disha/js/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="/Disha/js/bootstrap.js"></script>
 </head>
-<body>
+<body>s
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	<a href="#" class="navbar-brand">xyz</a>
 	<button class="navbar-toggler" data-toggle="collapse" data-target="#menu">

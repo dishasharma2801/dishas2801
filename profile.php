@@ -12,7 +12,7 @@ include("header.php");
 
 $a = $_SESSION['id'];
 
-$que = "SELECT * FROM test WHERE id = $a";
+$que = "SELECT * FROM company_survey WHERE id = $a";
 $result = mysqli_query($con, $que);
 $data = mysqli_fetch_assoc($result);
 ?>

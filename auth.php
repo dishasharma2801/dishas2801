@@ -1,17 +1,19 @@
 <?php
 include('db.php');
 // print_r($_POST);
-$e = $_POST['email'];
-$p = $_POST['password'];
-$p = sha1($p);
+$EMAIL = $_POST['email'];
+$PASS = $_POST['password'];
+$PASS = sha1($PASS);
 
-$que = "SELECT * FROM test WHERE email='$e'";
+$que = "SELECT * FROM company_survey WHERE email='$EMAIL'";
+
 $result = mysqli_query($con, $que);
 
 if(mysqli_num_rows($result)==1)
 {
 	$data = mysqli_fetch_assoc($result);
-	if($data['password'] == $p)
+	
+	if($data['password'] == $PASS)
 	{
 		$_SESSION['id']=$data['id'];
 		$_SESSION['name']=$data['name'];

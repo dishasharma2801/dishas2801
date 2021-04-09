@@ -1,14 +1,17 @@
 <?php
 include("db.php");
-// print_r($_POST);
-$a = $_POST['name'];
-$b = $_POST['email'];
-$c = $_POST['password'];
+ //print_r($_POST);
 
-$c = sha1($c);
+$NAME= $_POST['name'];
+$EMAIL = $_POST['email'];
+$PASS = $_POST['password'];
 
-$d = $_POST['address'];
+$PASS= sha1($PASS);
 
-$que = "INSERT INTO test (name, email, password, address) VALUES ('$a', '$b', '$c', '$d')";
+$ADD= $_POST['address'];
+
+$que = "INSERT INTO company_survey(name, email, password, address) VALUES ('$NAME', '$EMAIL', '$PASS', '$ADD')";
 
 mysqli_query($con, $que);
+header("location:login.php");
+?>

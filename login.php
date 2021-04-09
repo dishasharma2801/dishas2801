@@ -1,6 +1,10 @@
 <?php
 include("db.php");
 ?>
+<div class="card-footer">
+				<input type="submit" value="logout" class="btn btn-dark">
+
+</div>
 <div class="container mt-4" style="min-height: 600px;">
 	<h2 class="text-center">
 		User Login
@@ -32,27 +36,7 @@ include("db.php");
 					}
 
 					?>
-					<?php
-   
-    if (isset($_POST['login'])) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $query = $connection->prepare("SELECT * FROM company_survey WHERE email=:email");
-        $query->bindParam("email", $email, PDO::PARAM_STR);
-        $query->execute();
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if (!$result) {
-            echo '<p class="error">email password is wrong!</p>';
-        } else {
-            if (password_verify($password, $result['password'])) {
-                $_SESSION['user_id'] = $result['id'];
-                echo '<p class="success">Congratulations, you are logged in!</p>';
-            } else {
-                echo '<p class="error">email password  is wrong!</p>';
-            }
-        }
-    }
-?>
+					
 				</p>
 			</div>
 		</div>
