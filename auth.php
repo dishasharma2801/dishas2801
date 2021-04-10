@@ -23,6 +23,7 @@ if(mysqli_num_rows($result)==1)
 	}
 	else
 	{
+		//When password is incorrect
 		$_SESSION['msg']="This Password is Incorrect";
 		header("location:login.php");
 	}
@@ -30,7 +31,8 @@ if(mysqli_num_rows($result)==1)
 }
 else
 {
-	$_SESSION['msg']="This Username and Password is Incorrect";
+	//when email & password both are incorrect
+	$_SESSION['msg']="This Email and Password is Incorrect";
 	header("location:login.php");
 }
 
