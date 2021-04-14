@@ -6,10 +6,10 @@ if(! isset($_SESSION['is_user_logged_in']))
 }
 include("header.php");
 
-$a = $_SESSION['id'];
+$name = $_SESSION['id'];
 
-$que = "SELECT * FROM company_survey WHERE id = $a";
-$result = mysqli_query($con, $que);
+$query = "SELECT * FROM company_survey WHERE id = $name";
+$result=mysqli_query($connection, $query);
 $data = mysqli_fetch_assoc($result);
 ?>
 <div class="container mt-4" style="min-height: 600px;">
